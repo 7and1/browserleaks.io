@@ -243,11 +243,12 @@ export default function HomePage() {
           <div className="grid gap-6 md:grid-cols-3">
             {quickTests.map((test) => {
               const Icon = test.icon;
-              const statusConfig = {
+              const statusConfigs = {
                 critical: { color: 'text-rose-400', bg: 'bg-rose-500/10', border: 'border-rose-500/30', label: 'High Risk' },
                 warning: { color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/30', label: 'Medium Risk' },
                 safe: { color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', label: 'Check Status' },
-              }[test.status];
+              };
+              const statusConfig = statusConfigs[test.status as keyof typeof statusConfigs] ?? statusConfigs.safe;
 
               return (
                 <Link

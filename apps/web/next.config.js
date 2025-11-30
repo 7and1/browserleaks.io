@@ -7,7 +7,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  output: 'standalone',
+  // Note: 'standalone' is for Node.js, removed for Cloudflare Pages compatibility
 
   // Experimental features for performance
   experimental: {
