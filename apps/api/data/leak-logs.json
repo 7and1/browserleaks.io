@@ -1,0 +1,33 @@
+[
+  {
+    "id": "0b3bcf67-443f-4393-a074-7d759fbf9d29",
+    "createdAt": 1764225854012,
+    "privacyScore": 15,
+    "entropyScore": 0,
+    "leaks": {
+      "webrtc": false,
+      "dns": "none",
+      "battery": false,
+      "motion": false
+    },
+    "apiSurface": {
+      "ip": "unknown"
+    },
+    "report": {
+      "meta": {
+        "scanId": "de48d320-31f7-4208-b326-6837abb8fb95",
+        "time": 1764225854012
+      },
+      "privacyIndex": {
+        "score": 15,
+        "exposureLevel": "critical",
+        "leakedBits": 0
+      },
+      "hardwareLeaks": {},
+      "networkLeaks": {
+        "webrtc": "sealed"
+      },
+      "apiSurface": {}
+    }
+  }
+]
