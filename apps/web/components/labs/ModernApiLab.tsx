@@ -65,6 +65,13 @@ export function ModernApiLab() {
 }
 
 function detectCapabilities() {
+  if (typeof navigator === 'undefined') {
+    return [
+      { label: 'Bluetooth', status: 'unknown', detail: 'Loading...' },
+      { label: 'USB', status: 'unknown', detail: 'Loading...' },
+      { label: 'Clipboard', status: 'unknown', detail: 'Loading...' },
+    ];
+  }
   return [
     {
       label: 'Bluetooth',

@@ -92,7 +92,7 @@ export function HardwareLab() {
           <HardwareStatCard
             title="GPU Estimate"
             primary={getRendererFingerprint()}
-            secondary={`Threads: ${navigator.hardwareConcurrency ?? 'n/a'}`}
+            secondary={`Threads: ${typeof navigator !== 'undefined' ? navigator.hardwareConcurrency ?? 'n/a' : 'n/a'}`}
             description="Derived from Navigator & WebGL"
           />
         </div>
