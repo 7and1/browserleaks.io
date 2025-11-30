@@ -1,54 +1,60 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 interface Capability {
   label: string;
-  status: 'active' | 'guarded' | 'unsupported';
+  status: 'active' | 'guarded' | 'unsupported' | 'loading';
   detail: string;
 }
 
-const capabilityChecks: Array<{ label: string; check: () => Capability }>= [
-  {
-    label: 'Web Bluetooth',
-    check: () => ({
+function checkCapabilities(): Capability[] {
+  if (typeof navigator === 'undefined') {
+    return [
+      { label: 'Web Bluetooth', status: 'loading', detail: 'Checking...' },
+      { label: 'Web USB', status: 'loading', detail: 'Checking...' },
+      { label: 'Web MIDI', status: 'loading', detail: 'Checking...' },
+      { label: 'Clipboard', status: 'loading', detail: 'Checking...' },
+    ];
+  }
+
+  return [
+    {
       label: 'Web Bluetooth',
       status: 'bluetooth' in navigator ? 'active' : 'unsupported',
       detail: 'bluetooth' in navigator ? 'Adapter exposed to JS' : 'Not available',
-    }),
-  },
-  {
-    label: 'Web USB',
-    check: () => ({
+    },
+    {
       label: 'Web USB',
       status: 'usb' in navigator ? 'active' : 'unsupported',
       detail: 'usb' in navigator ? 'Devices can be enumerated' : 'Not available',
-    }),
-  },
-  {
-    label: 'Web MIDI',
-    check: () => ({
+    },
+    {
       label: 'Web MIDI',
       status: 'requestMIDIAccess' in navigator ? 'active' : 'unsupported',
       detail: 'requestMIDIAccess' in navigator ? 'Potential hardware leak' : 'Not available',
-    }),
-  },
-  {
-    label: 'Clipboard',
-    check: () => ({
+    },
+    {
       label: 'Clipboard',
       status: navigator.clipboard ? 'active' : 'guarded',
       detail: navigator.clipboard ? 'Read/write gated by permission' : 'Requires user gesture',
-    }),
-  },
-];
+    },
+  ];
+}
 
 const tone: Record<Capability['status'], string> = {
   active: 'border-orange-500/40 bg-orange-500/10 text-orange-200',
   guarded: 'border-cyan-400/40 bg-cyan-500/5 text-cyan-200',
   unsupported: 'border-slate-800 text-slate-400',
+  loading: 'border-slate-800 text-slate-500',
 };
 
 export function ApiScannerGrid() {
-  const capabilities = capabilityChecks.map((item) => item.check());
+  const [capabilities, setCapabilities] = useState<Capability[]>(() => checkCapabilities());
+
+  useEffect(() => {
+    setCapabilities(checkCapabilities());
+  }, []);
 
   return (
     <div className="grid gap-3 md:grid-cols-2">
